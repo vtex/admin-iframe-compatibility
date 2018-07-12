@@ -1,0 +1,19 @@
+{
+  "name": "admin-iframe-compatibility",
+  "version": "1.0.0",
+  "description": "Compatiblity js to adapt catalog admin to iframe",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Sorry m8, no tests yet...\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vtex/admin-iframe-compatibility.git"
+  },
+  "author": "guigs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vtex/admin-iframe-compatibility/issues"
+  },
+  "homepage": "https://github.com/vtex/admin-iframe-compatibility#readme"
+}
