@@ -4,7 +4,8 @@
   "description": "Compatiblity js to adapt catalog admin to iframe",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Sorry m8, no tests yet...\""
+    "test": "echo \"Sorry m8, no tests yet...\"",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/vtex/admin-iframe-compatibility/issues"
   },
-  "homepage": "https://github.com/vtex/admin-iframe-compatibility#readme"
+  "homepage": "https://github.com/vtex/admin-iframe-compatibility#readme",
+  "devDependencies": {
+    "express": "^4.16.3"
+  }
 }
