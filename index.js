@@ -43,7 +43,7 @@ var handleLocaleSelected = function (e, lang) {
   $.get('//io.vtex.com.br/i18n/0.1.147/catalog/' + lang + '.json').done(handleI18nData(lang));
 }
 
-var handleIframeLocaleSelected = function (e) {
+var handleIframePostMessage = (e) => {
   if (e.data && e.data.action && e.data.action.type === 'LOCALE_SELECTED') {
       handleLocaleSelected(e, e.data.action.payload)
   }
@@ -58,8 +58,8 @@ if (window.self === window.top) {
 
   $(window).on("localeSelected.vtex", handleLocaleSelected);
   $(window).on('topbarLoaded.vtex', handleTopbarLoaded);
-} else {
-  window.addEventListener("message", handleIframeLocaleSelected);
+} else { // The following runs only inside iframe
+  window.addEventListener("message", handleIframePostMessage);
   // Let the parent frame know details about our navigation
   window.top.postMessage({
       type: 'admin.navigation',
@@ -89,7 +89,9 @@ $(function ($) {
     // hides top navigation and menu if is inside iframe
     if (window.self !== window.top) {
         $(".AspNet-Menu").parent().parent().hide()
-        $("#content h2").hide()
+        if (!window.location.href.includes('Site/RelatorioIndexacao.aspx')) {
+            $("#content h2").hide()
+        }
         $("#areaUsuario").hide()
          // also if inside iframe, dispatch event to myvtex sending content height
          var currentHeight = document.body.scrollHeight
