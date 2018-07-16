@@ -89,6 +89,7 @@ $(function ($) {
     // hides top navigation and menu if is inside iframe
     if (window.self !== window.top) {
         $(".AspNet-Menu").parent().parent().hide()
+        $(".barra-alerta").hide() // esconde barra-alerta
         if (!window.location.href.includes('Site/RelatorioIndexacao.aspx')) {
             $("#content h2").hide()
         } else { // in RelatorioIndexacao.aspx page, header is a div with an h3
