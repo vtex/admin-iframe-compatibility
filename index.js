@@ -55,6 +55,20 @@ var handleIframePostMessage = (e) => {
       handleLocaleSelected(e, e.data.action.payload)
   }
 }
+
+var handleUnload = (e) => {
+    const focusedElement = $(':focus')[0]
+    const destination = focusedElement ? focusedElement.href : null
+    if (destination && destination.includes('/admin') && !destination.includes('/admin/Site')) {
+        console.debug(`%c [ADMIN CATALOG JS] \n Will navigate to other domain: ${destination}`, 'background: #002833; color: #258bd2')
+        const newPathName = destination.split('/admin/')[1]
+        const newUrl = `${window.location.origin}/admin/${newPathName}`
+        window.top.postMessage({
+            type: 'admin.absoluteNavigation',
+            newUrl,
+        }, '*');
+    }
+}
 // End of helper functions
 
 $(function ($) {
@@ -88,7 +102,9 @@ $(function ($) {
     if (window.self !== window.top) {
         console.debug(`%c [ADMIN CATALOG JS] \n running inside iframe`, 'background: #002833; color: #258bd2')
         window.addEventListener("message", handleIframePostMessage);
-        // Let the parent frame know details about our navigation
+        // Monitor navigation before it happens, if its an admin (not catalog) navigate to right url
+        window.addEventListener("beforeunload", handleUnload);
+        // Let the parent frame know details about our navigation AFTER navigating
         window.top.postMessage({
             type: 'admin.navigation',
             hash: window.location.hash,
