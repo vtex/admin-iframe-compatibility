@@ -40,7 +40,6 @@ var handleI18nData = function (lang) {
           fallbackLng: 'pt-BR'
       }, function () {
           $("body").localize();
-          $("#areaUsuario").hide()
       });
   }
 }
@@ -142,6 +141,11 @@ $(function ($) {
         addVtexLoaderScript();
         $(window).on("localeSelected.vtex", handleLocaleSelected);
         $(window).on('topbarLoaded.vtex', handleTopbarLoaded);
+        // style changes
+        $("#areaUsuario").children().removeClass('bt');
+        $("#ctl00_AreaUsuario_AreaUsuario1_lnkAcesseSite").removeClass('bt');
+        $("#ctl00_AreaUsuario_AreaUsuario1_lnkAcesseSiteAdminBeta").removeClass('bt');
+        $("#areaUsuario")[0].style['margin-top'] = "20px";
         // start marking correct menu item as active
         var aspNetMenuChildren = $(".AspNet-Menu").children();
         var checkIfPathIsActive = (href) => {
