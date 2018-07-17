@@ -1,6 +1,10 @@
+console.debug(`%c [ADMIN CATALOG JS] \n Running custom js `, 'background: #002833; color: #258bd2')
 // TO UPDATE i18n version, deploy version and change tag here
 const i18n_version = '0.1.148'
 
+/*****************************************
+*  THIS BLOCK HAS SOME HELPER FUNCTIONS  *
+******************************************/
 var addVtexLoaderScript = function () {
   var vtexLoaderScript = document.createElement('script')
   vtexLoaderScript.async = false
@@ -51,28 +55,16 @@ var handleIframePostMessage = (e) => {
       handleLocaleSelected(e, e.data.action.payload)
   }
 }
-
-// Initialize jQuery i18n
-i18nextJqueryInit();
-
-// We're in our own window
-if (window.self === window.top) {
-  addVtexLoaderScript();
-
-  $(window).on("localeSelected.vtex", handleLocaleSelected);
-  $(window).on('topbarLoaded.vtex', handleTopbarLoaded);
-} else { // The following runs only inside iframe
-  window.addEventListener("message", handleIframePostMessage);
-  // Let the parent frame know details about our navigation
-  window.top.postMessage({
-      type: 'admin.navigation',
-      hash: window.location.hash,
-      search: window.location.search,
-      pathname: window.location.pathname,
-  }, '*');
-}
+// End of helper functions
 
 $(function ($) {
+/*****************************
+*   THIS BLOCK ALWAYS RUNS   *
+******************************/
+
+    // Initialize jQuery i18n
+    i18nextJqueryInit();
+
     // hides breadcrumb
     $('#breadCrumbNav').hide()
 
@@ -89,8 +81,21 @@ $(function ($) {
         }
     }
 
-    // hides top navigation and menu if is inside iframe
+/*************************************************
+*   THIS BLOCK RUNS ONLY WHEN INSIDE AN IFRAME   *
+**************************************************/
+
     if (window.self !== window.top) {
+        console.debug(`%c [ADMIN CATALOG JS] \n running inside iframe`, 'background: #002833; color: #258bd2')
+        window.addEventListener("message", handleIframePostMessage);
+        // Let the parent frame know details about our navigation
+        window.top.postMessage({
+            type: 'admin.navigation',
+            hash: window.location.hash,
+            search: window.location.search,
+            pathname: window.location.pathname,
+        }, '*');
+        // hides menu and header titles when inside iframe since there is already a header there
         $(".AspNet-Menu").parent().parent().hide()
         $(".barra-alerta").hide() // esconde barra-alerta
         if (!window.location.href.includes('Site/RelatorioIndexacao.aspx')) {
@@ -101,19 +106,31 @@ $(function ($) {
             $('.container')[0].style.width = "100%"
         }
         $("#areaUsuario").hide()
-         // also if inside iframe, dispatch event to myvtex sending content height
-         var currentHeight = document.body.scrollHeight
-         setInterval(() => {
-             var newHeight = document.body.scrollHeight
-             if (currentHeight !== newHeight) {
-                 currentHeight = newHeight
-                 window.parent.postMessage({
-                     type: 'admin.updateContentHeight',
-                     height: newHeight,
-                 }, '*')
-             }
-         }, 1000)
-    } else { // if it's not inside iframe mark right menu item as active
+        // dispatch event to myvtex sending content height to update iframe size
+        var currentHeight = document.body.scrollHeight
+        setInterval(() => {
+            var newHeight = document.body.scrollHeight
+            if (currentHeight !== newHeight) {
+                currentHeight = newHeight
+                window.parent.postMessage({
+                    type: 'admin.updateContentHeight',
+                    height: newHeight,
+                }, '*')
+            }
+        }, 1000)
+    }
+
+/***************************************************
+*  THIS BLOCK RUNS ONLY WHEN NOT INSIDE AN IFRAME  *
+****************************************************/
+
+    if (window.self === window.top) {
+        console.debug(`%c [ADMIN CATALOG JS] \n NOT running inside iframe`, 'background: #002833; color: #258bd2')
+        // legacy topbar load
+        addVtexLoaderScript();
+        $(window).on("localeSelected.vtex", handleLocaleSelected);
+        $(window).on('topbarLoaded.vtex', handleTopbarLoaded);
+        // start marking correct menu item as active
         var aspNetMenuChildren = $(".AspNet-Menu").children();
         var checkIfPathIsActive = (href) => {
             return href && href.includes(pathname)
@@ -211,5 +228,6 @@ $(function ($) {
                 }
             })
         })
-    } // ends block that runs if it's not inside an iframe
+        // end marking correct menu item as active
+    }
 });
