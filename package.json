@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Sorry m8, no tests yet...\"",
-    "start": "node server.js"
+    "start": "node server.js",
+    "deploy": "releasy --stable && npm publish"
   },
   "repository": {
     "type": "git",
