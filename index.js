@@ -1,3 +1,6 @@
+// TO UPDATE i18n version, deploy version and change tag here
+const i18n_version = '0.1.148'
+
 var addVtexLoaderScript = function () {
   var vtexLoaderScript = document.createElement('script')
   vtexLoaderScript.async = false
@@ -39,8 +42,8 @@ var handleI18nData = function (lang) {
 }
 
 var handleLocaleSelected = function (e, lang) {
-  console.log('Fetching messages for selected locale:', lang)
-  $.get('//io.vtex.com.br/i18n/0.1.147/catalog/' + lang + '.json').done(handleI18nData(lang));
+  console.debug('%c [ADMIN CATALOG JS] \n Fetching messages for selected locale: ', 'background: #002833; color: #258bd2', lang)
+  $.get(`//io.vtex.com.br/i18n/${i18n_version}/catalog/` + lang + '.json').done(handleI18nData(lang));
 }
 
 var handleIframePostMessage = (e) => {
