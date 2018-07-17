@@ -61,11 +61,9 @@ var handleUnload = (e) => {
     const destination = focusedElement ? focusedElement.href : null
     if (destination && destination.includes('/admin') && !destination.includes('/admin/Site')) {
         console.debug(`%c [ADMIN CATALOG JS] \n Will navigate to other domain: ${destination}`, 'background: #002833; color: #258bd2')
-        const newPathName = destination.split('/admin/')[1]
-        const newUrl = `${window.location.origin}/admin/${newPathName}`
         window.top.postMessage({
             type: 'admin.absoluteNavigation',
-            newUrl,
+            destination,
         }, '*');
     }
 }
