@@ -108,7 +108,7 @@ $(function ($) {
         // hides menu and header titles when inside iframe since there is already a header there
         $(".AspNet-Menu").parent().parent().hide()
         $(".barra-alerta").hide() // esconde barra-alerta
-        $('#breadCrumbNav').hide()
+        // $('#breadCrumbNav').hide()
         if (!window.location.href.includes('Site/RelatorioIndexacao.aspx')) {
             $("#content h2").hide()
         } else { // in RelatorioIndexacao.aspx page, header is a div with an h3
