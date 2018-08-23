@@ -1,6 +1,7 @@
 console.debug(`%c [ADMIN CATALOG JS] \n Running custom js `, 'background: #002833; color: #258bd2')
 // TO UPDATE i18n version, deploy version and change tag here
 const i18n_version = '0.1.149'
+const FALLBACK_LANG = 'en-US'
 
 /*****************************************
 *  THIS BLOCK HAS SOME HELPER FUNCTIONS  *
@@ -29,7 +30,13 @@ var handleTopbarLoaded = function () {
   vtex.topbar.topbar = new vtex.topbar.Topbar();
 }
 
-var handleI18nData = function (lang) { 
+var handleI18nData = (lang) => {
+  if (!lang) {
+    // Load again in english if initial lang is not found
+    console.debug(`%c [ADMIN CATALOG JS] \n Trying the fallback locale lang: ${FALLBACK_LANG}`, 'background: #002833; color: #258bd2');
+    handleLocaleSelected(null, FALLBACK_LANG)
+    return
+  }
   return function (messagesJson) {
       var resources = {}
       resources[lang] = { 'translation': messagesJson };
@@ -37,7 +44,7 @@ var handleI18nData = function (lang) {
           lng: lang,
           debug: true,
           resources: resources,
-          fallbackLng: 'pt-BR'
+          fallbackLng: FALLBACK_LANG
       }, function () {
           $("body").localize();
       });
@@ -46,7 +53,12 @@ var handleI18nData = function (lang) {
 
 var handleLocaleSelected = function (e, lang) {
   console.debug(`%c [ADMIN CATALOG JS] \n Fetching messages from i18n repo version: ${i18n_version} for selected locale: `, 'background: #002833; color: #258bd2', lang)
-  $.get(`//io.vtex.com.br/i18n/${i18n_version}/catalog/` + lang + '.json').done(handleI18nData(lang));
+  $.get(`//io.vtex.com.br/i18n/${i18n_version}/catalog/` + lang + '.json')
+  .done(handleI18nData(lang))
+  .fail(function () {
+    console.debug(`%c [ADMIN CATALOG JS] \n Error fetching lang locale: ${lang}`, 'background: #002833; color: #F71963');
+    handleI18nData(null) // this triggers the load again, but with fallback lang
+  });
 }
 
 var handleIframePostMessage = (e) => {
