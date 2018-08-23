@@ -51,11 +51,11 @@ var handleI18nData = (lang) => {
   }
 }
 
-var handleLocaleSelected = (e, lang) => {
+var handleLocaleSelected = function (e, lang) {
   console.debug(`%c [ADMIN CATALOG JS] \n Fetching messages from i18n repo version: ${i18n_version} for selected locale: `, 'background: #002833; color: #258bd2', lang)
   $.get(`//io.vtex.com.br/i18n/${i18n_version}/catalog/` + lang + '.json')
   .done(handleI18nData(lang))
-  .fail(() => {
+  .fail(function () {
     console.debug(`%c [ADMIN CATALOG JS] \n Error fetching lang locale: ${lang}`, 'background: #002833; color: #F71963');
     handleI18nData(null) // this triggers the load again, but with fallback lang
   });
