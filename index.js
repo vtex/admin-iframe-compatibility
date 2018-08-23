@@ -57,7 +57,7 @@ var handleLocaleSelected = (e, lang) => {
   .done(handleI18nData(lang))
   .fail(() => {
     console.debug(`%c [ADMIN CATALOG JS] \n Error fetching lang locale: ${lang}`, 'background: #002833; color: #F71963');
-    handleI18nData(null)
+    handleI18nData(null) // this triggers the load again, but with fallback lang
   });
 }
 
