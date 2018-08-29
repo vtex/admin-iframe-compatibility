@@ -11,17 +11,21 @@ var addVtexLoaderScript = function () {
   document.body.appendChild(vtexLoaderScript)
 }
 
-var handleIframePostMessage = (e) => {
-  console.debug(`%c [ADMIN CMS JS] - message received: \n data: ${e.data} `, 'background: #002833; color: #258bd2')
-}
-
 /*************************************************
 *   THIS BLOCK RUNS ONLY WHEN INSIDE AN IFRAME   *
 **************************************************/
 
 if (window.self !== window.top) {
   console.debug(`%c [ADMIN CMS JS] - running inside iframe`, 'background: #002833; color: #258bd2')
-  window.addEventListener("message", handleIframePostMessage);
+  $("#btnVoltar").hide() // botao que volta pro catálogo (ñ faz sentido no)
+  $(".tool-box").hide()
+  // adjust height of code editor
+  setInterval(() => {
+    if ($('#editor')[0] && $('#editor').height() !== 342) {
+      console.debug(`%c [ADMIN CMS JS] - adjusting editor height`, 'background: #002833; color: #258bd2')
+      $('#editor')[0].style = 'height:342px;'
+    }
+  }, 500)
 }
 
 /***************************************************
