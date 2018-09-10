@@ -8,5 +8,5 @@ app.use(express.static('./', {
 }))
 
 app.listen(4200, () => {
-  console.log('Serving static js in localhost:4200/index.js')
+  console.log('Serving static js in localhost:4200/')
 })
