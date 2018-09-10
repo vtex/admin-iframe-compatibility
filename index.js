@@ -70,7 +70,7 @@ var handleIframePostMessage = (e) => {
 var handleUnload = (e) => {
     const focusedElement = $(':focus')[0]
     const destination = focusedElement ? focusedElement.href : null
-    if (destination && destination.includes('/admin') && (!destination.includes('/admin/Site') || !destination.includes('/admin/Control'))) {
+    if (destination && destination.includes('/admin') && !(destination.includes('/admin/Site') || destination.includes('/admin/Control'))) {
         console.debug(`%c [ADMIN CATALOG JS] \n Will navigate to other domain: ${destination}`, 'background: #002833; color: #258bd2')
         window.top.postMessage({
             type: 'admin.absoluteNavigation',
