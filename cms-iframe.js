@@ -21,9 +21,15 @@ if (window.self !== window.top) {
   $(".tool-box").hide()
   // adjust height of code editor
   setInterval(() => {
-    if ($('#editor')[0] && $('#editor').height() !== 342) {
+    if ($('#editor')[0] && $('#editor').height() !== 450) {
       console.debug(`%c [ADMIN CMS JS] - adjusting editor height`, 'background: #002833; color: #258bd2')
-      $('#editor')[0].style = 'height:342px;'
+      if($('#editor')[0] && $('#editor')[0].style) {
+        $('#editor')[0].style.height = '450px;'
+      }
+      var contentHeight = $('.ace_content').height()
+      if ($('.ace_scroller')[0] && $('.ace_scroller')[0].style) {
+        $('.ace_scroller')[0].style.height = `${contentHeight}px`
+      }
     }
   }, 500)
 }
