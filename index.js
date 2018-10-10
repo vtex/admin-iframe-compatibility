@@ -89,8 +89,9 @@ $(function ($) {
     i18nextJqueryInit();
 
     var pathname = window.location.pathname;
-    // open categories automatically if category page
-    if (pathname.includes('Site/Categories.aspx')) {
+
+    if (pathname.toLocaleLowerCase().includes('site/categories.aspx')) {
+        // open categories automatically if category page
         var colapseBtns = $('.hitarea.expandable-hitarea.lastExpandable-hitarea')
         if (colapseBtns.length > 0) {
             colapseBtns[0].click()
@@ -98,6 +99,19 @@ $(function ($) {
             setTimeout(() => {
                 $('.hitarea.expandable-hitarea.lastExpandable-hitarea')[0].click()
             }, 420); // blaze it
+        }
+        // highlight of searched category style fix (desculpe mundo)
+        var stylesheet = document.styleSheets[(document.styleSheets.length - 1)];
+        for( var i in document.styleSheets ){
+            if( document.styleSheets[i].href && document.styleSheets[i].href.indexOf("everything-else.css") ) {
+                stylesheet = document.styleSheets[i];
+                break;
+            }
+        }
+        if( stylesheet.addRule ){
+            stylesheet.addRule('.label-success', 'color:#1346d8 !important;background-color: #f2f4f5 !important');
+        } else if( stylesheet.insertRule ){
+            stylesheet.insertRule('.label-success { color:#1346d8 !important;background-color: #f2f4f5 !important }', stylesheet.cssRules.length);
         }
     }
 
