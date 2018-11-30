@@ -31,6 +31,17 @@ if (window.self !== window.top) {
         $('.ace_scroller')[0].style.height = `${contentHeight}px`
       }
     }
+    const uiWidgets = $('.ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-draggable.ui-resizable.ui-dialog-buttons')
+    if (uiWidgets && uiWidgets.length > 0) {
+      uiWidgets.each((index, el) => {
+        if (el.style['display'] === 'block' && el.style.position && el.style.top) {
+          console.debug(`%c [ADMIN CMS JS] - adjusting dialog box widget`, 'background: #002833; color: #258bd2')
+          // ajusta posiçao da caixa de dialogo qnd ela aparece por algum motivo com "top: -900px" e relativa
+          el.style.position = null
+          el.style.top = null
+        }
+      })
+    }
   }, 500)
 }
 
