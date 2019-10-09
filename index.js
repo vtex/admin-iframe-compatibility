@@ -48,7 +48,7 @@ var handleDatesFormat = (lang) => {
     // loop trough date time elements
     $.each(dateTimeElements, (obj, e) => {
         // translate element text based on lang using iso date attribute
-        const isoDate = $(e).attr('date-vtex-datetime-utc')
+        const isoDate = $(e).attr('data-vtex-datetime-utc')
         const finalDate = new Date(isoDate).toLocaleDateString(lang, { dateStyle: "short", timeStyle: "medium" })
         if (finalDate && finalDate !== 'Invalid Date') {
             $(e).text(finalDate)
