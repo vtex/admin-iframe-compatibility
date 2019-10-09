@@ -1,4 +1,4 @@
-console.debug(`%c [DEV ADMIN CATALOG JS] \n Running custom js `, 'background: #002833; color: #258bd2')
+console.debug(`%c [ADMIN CATALOG JS] \n Running custom js `, 'background: #002833; color: #258bd2')
 // TO UPDATE i18n version, deploy version and change tag here
 const i18n_version = '0.1.173'
 const FALLBACK_LANG = 'en-US'
@@ -34,27 +34,21 @@ var handleDatesFormat = (lang) => {
     console.debug(`%c [ADMIN CATALOG JS] \n Handling dates format in lang: ${lang}`, 'background: #002833; color: #258bd2');
     // DATE ELEMENTS
     var dateElements = $(".vtex-locale-date");
-    console.debug(`%c [ADMIN CATALOG JS] \n Total of ${dateElements.length} dates to translate in this page...`, 'background: #002833; color: #258bd2');
     // loop trough date elements
     $.each(dateElements, (obj, e) => {
         // translate element text based on lang using iso date attribute
-        const date = e.text()
-        const isoDate = e.attr('data-vtex-date-utc')
+        const isoDate = $(e).attr('data-vtex-date-utc')
         const finalDate = new Date(isoDate).toLocaleDateString(lang, { dateStyle: "short" })
-        console.log('element: ', e, '\n date: ', date, '\n iso: ', isoDate, '\n final: ', finalDate)
-        e.text(finalDate)
+        $(e).text(finalDate)
     })
     // DATE TIME ELEMENTS
     var dateTimeElements = $(".vtex-locale-datetime");
-    console.debug(`%c [ADMIN CATALOG JS] \n Total of ${dateTimeElements.length} dateTimes to translate in this page...`, 'background: #002833; color: #258bd2');
     // loop trough date time elements
     $.each(dateTimeElements, (obj, e) => {
         // translate element text based on lang using iso date attribute
-        const date = e.text()
-        const isoDate = e.attr('data-vtex-datetime-utc')
+        const isoDate = $(e).attr('date-vtex-datetime-utc')
         const finalDate = new Date(isoDate).toLocaleDateString(lang, { dateStyle: "short", timeStyle: "medium" })
-        console.log('element: ', e, '\n date: ', date, '\n iso: ', isoDate, '\n final: ', finalDate)
-        e.text(finalDate)
+        $(e).text(finalDate)
     })
 }
 
