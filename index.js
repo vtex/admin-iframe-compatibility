@@ -30,6 +30,28 @@ var handleTopbarLoaded = function () {
   vtex.topbar.topbar = new vtex.topbar.Topbar();
 }
 
+var handleDatesFormat = (lang) => {
+    console.debug(`%c [ADMIN CATALOG JS] \n Handling dates format in lang: ${lang}`, 'background: #002833; color: #258bd2');
+    // DATE ELEMENTS
+    var dateElements = $(".vtex-locale-date");
+    // loop trough date elements
+    $.each(dateElements, (obj, e) => {
+        // translate element text based on lang using iso date attribute
+        const isoDate = $(e).attr('data-vtex-date-utc')
+        const finalDate = new Date(isoDate).toLocaleDateString(lang, { dateStyle: "short" })
+        $(e).text(finalDate)
+    })
+    // DATE TIME ELEMENTS
+    var dateTimeElements = $(".vtex-locale-datetime");
+    // loop trough date time elements
+    $.each(dateTimeElements, (obj, e) => {
+        // translate element text based on lang using iso date attribute
+        const isoDate = $(e).attr('date-vtex-datetime-utc')
+        const finalDate = new Date(isoDate).toLocaleDateString(lang, { dateStyle: "short", timeStyle: "medium" })
+        $(e).text(finalDate)
+    })
+}
+
 var handleI18nData = (lang) => {
   if (!lang) {
     // Load again in english if initial lang is not found
@@ -48,6 +70,7 @@ var handleI18nData = (lang) => {
       }, function () {
           $("body").localize();
       });
+      handleDatesFormat(lang)
   }
 }
 
