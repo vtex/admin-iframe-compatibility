@@ -39,16 +39,20 @@ var handleDatesFormat = (lang) => {
         // translate element text based on lang using iso date attribute
         const isoDate = $(e).attr('data-vtex-date-utc')
         const finalDate = new Date(isoDate).toLocaleDateString(lang, { dateStyle: "short" })
-        $(e).text(finalDate)
+        if (finalDate && finalDate !== 'Invalid Date') {
+            $(e).text(finalDate)
+        }
     })
     // DATE TIME ELEMENTS
     var dateTimeElements = $(".vtex-locale-datetime");
     // loop trough date time elements
     $.each(dateTimeElements, (obj, e) => {
         // translate element text based on lang using iso date attribute
-        const isoDate = $(e).attr('date-vtex-datetime-utc')
+        const isoDate = $(e).attr('data-vtex-datetime-utc')
         const finalDate = new Date(isoDate).toLocaleDateString(lang, { dateStyle: "short", timeStyle: "medium" })
-        $(e).text(finalDate)
+        if (finalDate && finalDate !== 'Invalid Date') {
+            $(e).text(finalDate)
+        }
     })
 }
 
