@@ -32,13 +32,15 @@ var handleTopbarLoaded = function () {
 
 var handleDatesFormat = (lang) => {
     console.debug(`%c [ADMIN CATALOG JS] \n Handling dates format in lang: ${lang}`, 'background: #002833; color: #258bd2');
+    const dateFormatOptions = { year: "numeric", month: "2-digit", day: "2-digit" }
+    const dateTimeFormatOptions = { ...dateFormatOptions, hour: "2-digit", minute: "2-digit", second: "2-digit" }
     // DATE ELEMENTS
     var dateElements = $(".vtex-locale-date");
     // loop trough date elements
     $.each(dateElements, (obj, e) => {
         // translate element text based on lang using iso date attribute
         const isoDate = $(e).attr('data-vtex-date-utc')
-        const finalDate = new Date(isoDate).toLocaleDateString(lang, { dateStyle: "short" })
+        const finalDate = new Date(isoDate).toLocaleDateString(lang, dateFormatOptions)
         if (finalDate && finalDate !== 'Invalid Date') {
             $(e).text(finalDate)
         }
@@ -49,7 +51,7 @@ var handleDatesFormat = (lang) => {
     $.each(dateTimeElements, (obj, e) => {
         // translate element text based on lang using iso date attribute
         const isoDate = $(e).attr('data-vtex-datetime-utc')
-        const finalDate = new Date(isoDate).toLocaleDateString(lang, { dateStyle: "short", timeStyle: "medium" })
+        const finalDate = new Date(isoDate).toLocaleDateString(lang, dateTimeFormatOptions)
         if (finalDate && finalDate !== 'Invalid Date') {
             $(e).text(finalDate)
         }
