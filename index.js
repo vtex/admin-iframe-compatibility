@@ -1,6 +1,6 @@
 console.debug(`%c [ADMIN CATALOG JS] \n Running custom js `, 'background: #002833; color: #258bd2')
 // TO UPDATE i18n version, deploy version and change tag here
-const i18n_version = '0.1.188'
+const i18n_version = '0.1.189'
 const FALLBACK_LANG = 'en-US'
 
 /*****************************************
