@@ -1,6 +1,6 @@
 {
   "name": "admin-iframe-compatibility",
-  "version": "1.0.70-beta",
+  "version": "1.0.70",
   "description": "Compatiblity js to adapt catalog admin to iframe",
   "main": "index.js",
   "scripts": {
